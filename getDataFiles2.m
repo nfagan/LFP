@@ -46,7 +46,8 @@ d = remDir(d);
 for folderNumber = 1:length(d);
 
 folderName = d(folderNumber).name;
-fullPath = strcat(outerPath,'/',folderName); %get file path 
+fullPath = fullfile(outerPath,folderName);
+% fullPath = strcat(outerPath,'/',folderName); %get file path 
 cd(fullPath);        
 
 %get Picto Event File
