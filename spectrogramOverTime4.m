@@ -1,6 +1,7 @@
 function h = spectrogramOverTime4(power,frequency,maxFrequency,trialNumber,trialByTrial,stepSize,startEnd,clims)
 
-minFrequency = 10;
+% minFrequency = 10;
+minFrequency = 0;
 printFig = 0;
 toSmooth = 0;
 doFilter = 1;
@@ -85,7 +86,12 @@ end
 % filteredImage = imfilter(combinedArray, filterTest, 'replicate');
 B = imgaussfilt(spectPower,2);
 
-h = imagesc(spectFreq,'CData',B,clims);
+if ~isempty(clims);
+
+    h = imagesc(spectFreq,'CData',B,clims);
+else
+    h = imagesc(spectFreq,'CData',B);
+end
 ylabel('Power (dB)');
 
 else

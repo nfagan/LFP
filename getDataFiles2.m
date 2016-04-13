@@ -7,9 +7,10 @@ switch channel
         channelName = 'WB09';
     case 'Wes BLA'
         channelName = 'WB01';
-    case 'test'
+    case 'testCheek'
 %         channelName = 'WB01';
-        channelName = 'SPK09';
+%         channelName = 'SPK09';
+        channelName = 'WB11';
 end
 
 % get Plexon file

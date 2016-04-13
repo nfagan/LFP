@@ -1,8 +1,8 @@
 dataType = 'Olga BLA';
 
-trialInfo.outcome = 'other'; %'self' | 'both' | 'other' | 'none' | 'pro' | 'anti' | 'all'
+trialInfo.outcome = 'all'; %'self' | 'both' | 'other' | 'none' | 'pro' | 'anti' | 'all'
 trialInfo.trialType = 'choice'; %all or 'choice' or 'cued'
-trialInfo.epoch = 'Fixation'; %Target On %Target Acquire %Fixation %Mag Cue %Reward %Pre-Fixation
+trialInfo.epoch = 'Target Acquire'; %Target On %Target Acquire %Fixation %Mag Cue %Reward %Pre-Fixation
 windowInfo.stepSize = 50; %ms
 
 switch trialInfo.epoch
@@ -11,8 +11,8 @@ switch trialInfo.epoch
         windowInfo.lengthToPlot = 0; %ms
         windowInfo.initial = -250; %ms -- use to look backwards
         
-        trialInfo.outcome = 'all';
-        trialInfo.trialType = 'all';
+%         trialInfo.outcome = 'all';
+%         trialInfo.trialType = 'all';
         
         fixSignals = masterGetSignals3(dataType,trialInfo,windowInfo);
         fixationSignals = getWindows(fixSignals,windowInfo.stepSize,windowInfo.windowSize);

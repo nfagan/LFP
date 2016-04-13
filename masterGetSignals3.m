@@ -16,10 +16,16 @@ filterCutoff = 250; %hz
 
 loadIn = 1; %always load
 
-if (strcmp(dataType,'Olga BLA')) || ((strcmp(dataType,'Olga ACC')))
+if strcmp(computer,'MACI64');
+    if (strcmp(dataType,'Olga BLA')) || ((strcmp(dataType,'Olga ACC')))
+%         umbrellaDirectory = '/Volumes/My Passport/NICK/Chang Lab 2016/LFP/Olgas_Data_Targac/';
+        umbrellaDirectory = '/Volumes/My Passport/NICK/Chang Lab 2016/LFP/cheek_electrode_data/Olga to Nick/';
+    elseif strcmp(dataType,'testCheek')
+%         umbrellaDirectory = '/Volumes/My Passport/NICK/Chang Lab 2016/LFP/test_spikes/';
+        umbrellaDirectory = '/Volumes/My Passport/NICK/Chang Lab 2016/LFP/cheek_electrode_data/Olga to Nick/';
+    end
+else
     umbrellaDirectory = '/Volumes/My Passport/NICK/Chang Lab 2016/LFP/Olgas_Data_Targac/';
-elseif strcmp(dataType,'test')
-    umbrellaDirectory = '/Volumes/My Passport/NICK/Chang Lab 2016/LFP/test_spikes/';
 end
 
 folderDirectory = getFolderDirectory(umbrellaDirectory);
@@ -62,6 +68,12 @@ fprintf('\n \t \t Done');
 
 %%% Fix Reference Times
 
+% M(:,1) = plex.reformatted(:,2);
+
+%%% new for testCheek
+
+ind = plex.reformatted(:,1);
+M = M(ind,:);
 M(:,1) = plex.reformatted(:,2);
 
 %%% Filter Signal
@@ -83,6 +95,8 @@ end
 [allTimes,trialVarData] = removeErrorTrials(allTimes,trialVarData,errorIndex); %remove errors first
 
 %%% Separate Trials by Reward Outcome, and optionally by Trial Type
+
+trialVarData = trialVarData(:,2:end); %%% for cheeck check ** change later
 
 allTimes = epochSort3(trialVarData,allTimes,outcome,trialType);
 
