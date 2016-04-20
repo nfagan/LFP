@@ -9,13 +9,13 @@ else
     mOutput = M;
 end
 
-checkOrder = mOutput(1,2) / mOutput(1,1);
-
-modCheck = mod(M(1,2),1) == 0;
-
-if checkOrder > 1 || modCheck %if Plexon time is the second column (which it shouldn't be)
-    mOutput = fliplr(mOutput);
-end
+% checkOrder = mOutput(1,2) / mOutput(1,1);
+% 
+% modCheck = mod(M(1,2),1) == 0;
+% 
+% if checkOrder > 1 || modCheck %if Plexon time is the second column (which it shouldn't be)
+%     mOutput = fliplr(mOutput);
+% end
 
 
 

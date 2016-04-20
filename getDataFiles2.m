@@ -17,21 +17,18 @@ end
 plexFile = getFileType(directory,'pl2');
 
 if doPlex
-    
 % plex = getPlexonDataTest(plexFile,channelName);   
 plex = getPlexonData(plexFile,channelName);
-
 else
-    
     if nargin>3;    
-        plex.ad = LFP;        
-    end        
-%     plex = NaN;
-
+        plex.ad = LFP;
+    else
+        plex = NaN;
+    end
 end
 
 append = 'behavioral data';        
-outerPath = (strcat(directory,append));        
+outerPath = fullfile(directory,append);
 cd(outerPath);
 
 d = dir(outerPath); %all files in directory        

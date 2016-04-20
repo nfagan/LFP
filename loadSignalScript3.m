@@ -1,6 +1,12 @@
-dataType = 'Olga BLA';
+tic;
+global storePlex;
+global storeDataType;
+global forceReload;
 
-trialInfo.outcome = 'all'; %'self' | 'both' | 'other' | 'none' | 'pro' | 'anti' | 'all'
+dataDir = '/Volumes/My Passport/NICK/Chang Lab 2016/LFP/Olgas_Data_Targac/';
+dataType = 'Olga ACC';
+
+trialInfo.outcome = 'other'; %'self' | 'both' | 'other' | 'none' | 'pro' | 'anti' | 'all'
 trialInfo.trialType = 'choice'; %all or 'choice' or 'cued'
 trialInfo.epoch = 'Target Acquire'; %Target On %Target Acquire %Fixation %Mag Cue %Reward %Pre-Fixation
 windowInfo.stepSize = 50; %ms
@@ -10,27 +16,16 @@ switch trialInfo.epoch
         windowInfo.windowSize = 250; %ms
         windowInfo.lengthToPlot = 0; %ms
         windowInfo.initial = -250; %ms -- use to look backwards
-        
-%         trialInfo.outcome = 'all';
-%         trialInfo.trialType = 'all';
-        
-        fixSignals = masterGetSignals3(dataType,trialInfo,windowInfo);
+        fixSignals = load_signals(dataDir,dataType,trialInfo,windowInfo);
         fixationSignals = getWindows(fixSignals,windowInfo.stepSize,windowInfo.windowSize);
     case 'Target Acquire'
         windowInfo.windowSize = 250; %ms
         windowInfo.lengthToPlot = 2000; %ms
         windowInfo.initial = -1000; %ms -- use to look backwards
-        targSignals = masterGetSignals3(dataType,trialInfo,windowInfo);
+        targSignals = load_signals(dataDir,dataType,trialInfo,windowInfo);
         targetAcSignals = getWindows(targSignals,windowInfo.stepSize,windowInfo.windowSize);
 end
-
-% concatenatedSignals = masterGetSignals3(dataType,trialInfo,windowInfo);
-% targetAcSignals = getWindows(concatenatedSignals,windowInfo.stepSize,windowInfo.windowSize);
-
-% accSelf = loadSignalFunction(dataType,trialInfo,windowInfo);
-% selfBlaSignals = loadSignalFunction(dataType,trialInfo,windowInfo);
-% fixationSignals = loadSignalFunction(dataType,trialInfo,windowInfo);
-% targetAcSignals = loadSignalFunction(dataType,trialInfo,windowInfo);
+toc;
 
  
 %% get non-normalized power
