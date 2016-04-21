@@ -28,7 +28,7 @@ while escape == 0 % if directory has no subfolders, assume withSubfolders was
     end
 end
 
-if removeRem
+if removeRem % if ignoring directories prefixed with 'rem'
     umbrDir = remDir(umbrDir);
 end
 
