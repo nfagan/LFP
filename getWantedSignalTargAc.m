@@ -22,15 +22,15 @@ meanPlex = mean(ad); stdPlex = std(ad);
 multiplier = plex.adfreq/1000;
 
 switch epoch    
-    case 'Fixation'
+    case 'fixation'
         wantedEpoch = 1;
-    case 'Mag Cue'
+    case 'mag cue'
         wantedEpoch = 2;
-    case 'Target On'
+    case 'target on'
         wantedEpoch = 3;
-    case 'Target Acquire'
+    case 'target acquire'
         wantedEpoch = 4;
-    case 'Reward'
+    case 'reward'
         wantedEpoch = 5;
 end;
 
@@ -44,7 +44,7 @@ extractedTimesforWantedEpoch = extractedTimesforWantedEpoch(:) + initial;
 
 %adjust the start time so that it is in the center of the window
 
-% extractedTimesforWantedEpoch = extractedTimesforWantedEpoch(:) - windowSize/2;
+extractedTimesforWantedEpoch = extractedTimesforWantedEpoch(:) - windowSize/2;
 
 %preallocate signalDuringWantedEpoch
 

@@ -71,9 +71,17 @@ csvDir = remDir(csvDir);
 
 for i = 1:length(csvDir);            
     if i < 2;
-        M = csvread(csvDir(i).name,1); %column 1 = Plexon Time; column 2 = Picto time
+        try 
+            M = csvread(csvDir(i).name); %attempt to load all rows of .csv file
+        catch %if string column headers exist, load all values EXCEPT the column headers
+            M = csvread(csvDir(i).name,1); %column 1 = Plexon Time; column 2 = Picto time 
+        end
     else
-        update = csvread(csvDir(i).name,1);
+        try
+            update = csvread(csvDir(i).name);
+        catch
+            update = csvread(csvDir(i).name,1);
+        end
         M = vertcat(M,update);
     end;
 end;

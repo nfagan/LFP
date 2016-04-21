@@ -20,7 +20,10 @@ if require_user_input == '0':
 	saveDirectory = '/Users/Nick/Desktop/py_test/outputs'
 else:
 	dataDirectory = raw_input('\nEnter name of the directory that houses your .sqlite files> ')
-	saveDirectory = raw_input('\nEnter the name of the directory in which to save .csv files> ')
+	saveDirectory = raw_input('\nEnter the name of the directory in which to save .csv files, or input: same to use the .sqlite directory> ')
+
+	if saveDirectory == 'same':
+		saveDirectory = dataDirectory
 
 os.chdir(dataDirectory)
 fileNames = glob.glob('*.sqlite') # get all the database files

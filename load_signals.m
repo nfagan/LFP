@@ -17,7 +17,7 @@ end
 
 outcome = trialInfo.outcome;
 trialType = trialInfo.trialType; % choice, cued, or all
-epoch = trialInfo.epoch;
+epoch = lower(trialInfo.epoch);
 
 stepSize = windowInfo.stepSize;
 windowSize = windowInfo.windowSize;
@@ -31,7 +31,7 @@ filterCutoff = 250; % Hz
 
 %%% - Check validity of inputs and structure of umbrellaDirectory
 
-if strcmp(epoch,'Target Acquire') && strcmp(trialType,'cued')
+if strcmp(epoch,'target acquire') && strcmp(trialType,'cued')
     % If user specifies target acquire (choice) epoch and cued trials,
     % report an error
     error('Alignment times for target acquire don''t exist for cued trials.');
