@@ -25,9 +25,11 @@ for i = 1:length(subfolders);
                 end
             end
             
-            sqlFile = sqlDirSubFolder(1).name;
-            destination = fullfile(folderPath,sqlFile);
-            copyfile(sqlFile,destination);
+            for j = 1:length(sqlDirSubFolder);
+                sqlFile = sqlDirSubFolder(j).name;
+                destination = fullfile(folderPath,sqlFile);
+                copyfile(sqlFile,destination);
+            end
             
         end
     else
