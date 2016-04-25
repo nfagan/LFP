@@ -98,11 +98,16 @@ for i = 1:length(fixedDir) % for each session folder ...
                  storePlexTimes = flipud(storePlexTimes);
                  for k = 1:length(pl2Dir);
                      fileName = sprintf('%d_time_index.txt',k);
+                     fileName = fullfile(umbrDir,fixedDir(i).name,fileName);
                      onePl2Index = storePlexTimes(:,2) == k;
                      dlmwrite(fileName,onePl2Index);
                  end
                  
              end
+        else
+            fprintf(['\nThe lengths of the .pl2 and csvFiles match, and a time-index' ...
+                , ' shouldn''t be necessary for the files in the folder %s'],...
+                fixedDir(i).name);
         end
                          
     end
