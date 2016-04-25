@@ -36,17 +36,19 @@ for i = 1:length(subFolderDir);
                     source = fullfile(subFolderPath,pl2Names{l});
                     destination = fullfile(newFolderPath,pl2Names{l});
                     copyfile(source,destination);
-                    if length(csvDir) > 1
-                        fprintf(['\nWARNING: There''s more than one .csv file' ...
-                            , ' in the subfolder %s, and only the first will be copied to the new folder.'],...
-                            subFolderDir(i).name);
-                    elseif isempty(csvDir)
+                    
+                    if isempty(csvDir);
                         fprintf(['\nWARNING: No .csv file was found' ...
                             , ' in the subfolder %s, and none will be copied to the new folder.'],...
                             subFolderDir(i).name);
                     else
-                        sourceCSV = fullfile(subFolderPath,csvDir(i).name);
-                        destinCSV = fullfile(newFolderPath,csvDir(i).name);
+                        if length(csvDir) > 1
+                            fprintf(['\nWARNING: There''s more than one .csv file' ...
+                            , ' in the subfolder %s, and only the first will be copied to the new folder.'],...
+                            subFolderDir(i).name);
+                        end
+                        sourceCSV = fullfile(subFolderPath,csvDir(1).name);
+                        destinCSV = fullfile(newFolderPath,csvDir(1).name);
                         copyfile(sourceCSV,destinCSV);
                     end
                         
