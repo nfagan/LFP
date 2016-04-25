@@ -65,11 +65,11 @@ for e in range(len(subfolders)):
 
 			if saveDirectory != 'same':
 				os.chdir(saveDirectory) # cd -> specified save directory
+				print('\n\t\tSaving .csv file to "%s" ...') % saveDirectory
 			else:
-				saveDirectory = fullFolderPath
-				os.chdir(saveDirectory) # cd -> specified save directory
-
-			print('\n\t\tSaving .csv file to "%s" ...') % saveDirectory
+				os.chdir(fullFolderPath) # cd -> specified save directory
+				print('\n\t\tSaving .csv file to "%s" ...') % fullFolderPath
+			
 			writer = csv.writer(open(csvFileName, "w")) # create a new .csv file
 			writer.writerows(selected) # save the selected rows
 
