@@ -25,12 +25,16 @@ for i = 1:length(subfolders);
                 end
             end
             
-            for j = 1:length(sqlDirSubFolder);
-                sqlFile = sqlDirSubFolder(j).name;
-                destination = fullfile(folderPath,sqlFile);
-                copyfile(sqlFile,destination);
+            if foundSqlFile
+                for j = 1:length(sqlDirSubFolder);
+                    sqlFile = sqlDirSubFolder(j).name;
+                    destination = fullfile(folderPath,sqlFile);
+                    copyfile(sqlFile,destination);
+                end
+            else
+                fprintf(['\NWARNING: Could not find any .sqlite files in the' ...
+                    , ' subfolder %s'],folderPath);
             end
-            
         end
     else
         fprinf('\nA .sqlite file was found in the correct place in subfolder %s', ...
