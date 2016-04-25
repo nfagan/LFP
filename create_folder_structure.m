@@ -12,6 +12,7 @@ for i = 1:length(subFolderDir);
     cd(subFolderPath)
     
     pl2Dir = dir('*.pl2');
+    csvDir = dir('*.csv');
     
     if length(pl2Dir) > 1
         for k = 1:length(pl2Dir);
@@ -26,7 +27,7 @@ for i = 1:length(subFolderDir);
             
             mkdir(newFolderPath);
             
-            % copy relevant .pl2 files ... 
+            % copy relevant .pl2 files, and .csv files ...
             
             for l = 1:length(pl2Names);
                 if strncmpi(pl2Names{l},fileIndex,1) % if .pl2 file matches 
@@ -35,6 +36,20 @@ for i = 1:length(subFolderDir);
                     source = fullfile(subFolderPath,pl2Names{l});
                     destination = fullfile(newFolderPath,pl2Names{l});
                     copyfile(source,destination);
+                    if length(csvDir) > 1
+                        fprintf(['\nWARNING: There''s more than one .csv file' ...
+                            , ' in the subfolder %s, and only the first will be copied to the new folder.'],...
+                            subFolderDir(i).name);
+                    elseif isempty(csvDir)
+                        fprintf(['\nWARNING: No .csv file was found' ...
+                            , ' in the subfolder %s, and none will be copied to the new folder.'],...
+                            subFolderDir(i).name);
+                    else
+                        sourceCSV = fullfile(subFolderPath,csvDir(i).name);
+                        destinCSV = fullfile(newFolderPath,csvDir(i).name);
+                        copyfile(sourceCSV,destinCSV);
+                    end
+                        
                 end
             end
             
@@ -92,8 +107,12 @@ for i = 1:length(subFolderDir);
         
         if strcmp(inp(1),'y');
             rmdir(subFolderPath,'s');
-        else
+        elseif strcmp(inp(1),'n')
             fprintf('\nNot deleting %s ...',subFolderPath);
+        else
+            if strcmp(inp,'abort');
+                error('User aborted');
+            end
         end
             
     elseif isempty(pl2Dir)
