@@ -60,6 +60,12 @@ for j = 1:length(extractedTimesforWantedEpoch) %for each trial ...
     
     currentTime = extractedTimesforWantedEpoch(j);
     [N,index] = histc(currentTime,times); clear N;
+    
+    if index == 0
+        disp(currentTime); disp(max(times)); disp(min(times));
+        error('No index found');
+    end
+    
     check = abs(currentTime - times(index)) < abs(currentTime-times(index+1));
     if ~check
         index = index+1;    

@@ -1,3 +1,9 @@
+% function check_timing_pl2_csv.m - checks whether the .pl2-.csv file
+% pairs appear to be formatted properly for use with load_signals.m. If
+% valid = 0, the function believes that data in the listed folder will not be
+% suitable for load_signals.m. If valid = 2, the data may or may not be
+% valid; running with this folder intact is worth a shot
+
 function valid = check_timing_pl2_csv(umbrellaDirectory,withSubfolders,removeRem)
 
 escape = 0;
@@ -32,7 +38,7 @@ if removeRem % if ignoring directories prefixed with 'rem'
     umbrDir = remDir(umbrDir);
 end
 
-step = 1; storeMessage = [];
+step = 1; storeMessage = []; valid = [];
 for i = 1:length(umbrDir);
     cd(umbrDir(i).name);
     
@@ -43,12 +49,12 @@ for i = 1:length(umbrDir);
     nPL2 = length(pl2Dir);
     
     if nCSV ~= nPL2 || nCSV == 0
-        storeMessage{step} = sprintf(['There is not an equal number of .pl2' ...
-            , ' and .csv files in the current folder\n\t (%s), and\n\t this folder will' ...
+        storeMessage{step} = sprintf(['\nThere is not an equal number of .pl2' ...
+            , ' and .csv files in the folder\n (%s), and\n this folder will' ...
             , ' be skipped from further checking.'],umbrDir(i).name);
         step = step+1;
     else
-        for k = 1:length(csvDir);
+        for k = 1:nCSV
             try
                 csvFile = csvread(csvDir(k).name);
             catch
@@ -62,32 +68,56 @@ for i = 1:length(umbrDir);
             
             if size(reformatted,1) ~= size(csvFile,1)
                 if size(reformatted,1) < size(csvFile,1);
-                    storeMessage{step} = sprintf(['In the folder (%s), the current .pl2 file (%s)' ...
-                        , ' does not encompass the full Picto session (%s)' ...
-                        , ', but still ought to work with load_signals.'],...
-                        umbrDir(i).name,pl2Dir(k).name,csvFile(k).name);
-                    step = step+1;
+                    txtDir = dir('*.txt'); % check if there's a .txt file index of
+                                           % which strobed-times correspond
+                                           % to which .csv Picto times
+                    if ~isempty(txtDir);
+                        storeMessage{step} = sprintf(['\nIn the folder (%s), the current .pl2 file\n(%s)' ...
+                            , ' does not encompass the full\nPicto session (%s)' ...
+                            , ',\nbut still ought to work with load_signals, because' ...
+                            , ' there is \na .txt-file index associated with it.'],...
+                            umbrDir(i).name,pl2Dir(k).name,csvDir(k).name);
+                            step = step+1;
+                            valid(step) = 2;
+                    else
+                        storeMessage{step} = sprintf(['\nIn the folder (%s), the current .pl2 file\n(%s)' ...
+                            , ' does not encompass the full\nPicto session (%s)' ...
+                            , ',\nand does not have a .txt file index associated with it.' ...
+                            , '\nThis folder will not work with load_signals.m'],...
+                            umbrDir(i).name,pl2Dir(k).name,csvDir(k).name);
+                            step = step+1;
+                            valid(step) = 3;
+                    end
                 else
-                    storeMessage{step} = sprintf(['In the folder (%s), the current .pl2 file (%s)' ...
-                        , ' has more timing data than the Picto session file (%s)' ...
+                    storeMessage{step} = sprintf(['\nIn the folder (%s), the current .pl2 file\n(%s)' ...
+                        , ' has more timing data than the\nPicto session file (%s)' ...
                         , ', and will not work with load_signals (as is).'],...
-                        umbrDir(i).name,pl2Dir(k).name,csvFile(k).name);
+                        umbrDir(i).name,pl2Dir(k).name,csvDir(k).name);
                     step = step+1;
+                    valid(step) = 3;
                 end
+            else
+                storeMessage{step} = sprintf(['\nIn the folder (%s), the current .pl2 file''s\n(%s)' ...
+                        , ' timing data matches that of Picto''s (%s).\n' ...
+                        , ' This .pl2-.csv pair should work with load_signals'],...
+                        umbrDir(i).name,pl2Dir(k).name,csvDir(k).name);
+                    step = step+1;
             end
         end
     end
     cd ..; % escape from subfolder to umbrellaDirectory
 end
 
-if isempty(storeMessage);
-    fprintf('\nThe .csv-.pl2 pairs appear valid and able to work with load_signals.m');
-    valid = 1;
-else
-    for i = 1:length(storeMessage);
-        fprintf('\n%s',storeMessage{i});
-    end
+for i = 1:length(storeMessage);
+    fprintf('\n%s',storeMessage{i});
+end
+
+if sum(valid == 3) >= 1; % 3 -- invalid
     valid = 0;
+elseif sum(valid == 2) >= 1;
+    valid = 2;
+else
+    valid = 1;
 end
 
     

@@ -7,7 +7,7 @@
 % times for each trial in which SELF is rewarded. cell{2} is the same but
 % for BOTH-rewarded trials. cell{3} is other. cell{4} is none.
 
-%make separateByChoice 0, 1 or 2
+% make separateByChoice 0, 1 or 2
 %   0 means choice and cued trials will be combined
 %   1 means choice only
 %   2 means cue only

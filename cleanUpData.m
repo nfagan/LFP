@@ -4,7 +4,8 @@ eventDataOutput = makeMatrix(eventData);
 trialVarDataOutput = makeMatrix(trialVarData);
 
 if size(M,2) > 2; % if M has more info than just event times
-    mOutput = [M(:,4) M(:,5)];
+%     mOutput = [M(:,4) M(:,5)];
+    mOutput = M(:,1:2);
 else
     mOutput = M;
 end

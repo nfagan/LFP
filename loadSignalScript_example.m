@@ -1,43 +1,45 @@
 tic;
-global storePlex;
+
+global storePlex; % global variable for pre-processed signals
 global storeDataType;
 global forceReload;
 
-dataDir = '/Volumes/My Passport/NICK/Chang Lab 2016/LFP/Olgas_Data_Targac/';
-dataType = 'Olga ACC';
+% dataDir = '/Volumes/My Passport/NICK/Chang Lab 2016/LFP/Olgas_Data_Targac/';
+dataDir = '/Volumes/My Passport/NICK/Chang Lab 2016/LFP/new_data';
+dataType = 'bla:lfp'; % acc:lfp
 
-trialInfo.outcome = 'other'; % 'self' | 'both' | 'other' | 'none' | 'pro' | 'anti' | 'all'
+trialInfo.outcome = 'self'; % 'self' | 'both' | 'other' | 'none' | 'pro' | 'anti' | 'all'
 trialInfo.trialType = 'choice'; % all | 'choice' | 'cued'
-trialInfo.epoch = 'fixation'; % Target On | Target Acquire | Fixation | Mag Cue | Reward
-
-windowInfo.stepSize = 50; % ms - amount to step-forwards in sliding window
-windowInfo.windowSize = 250; % ms - "bin size"
-windowInfo.initial = -250; % ms - use to adjust the epoch start-time
-windowInfo.lengthToPlot = 0; % use 0 for fixation baseline -- this is because
-                             % the TOTAL amount to plot = lengthToPlot +
-                             % windowSize, in order to account for the fact
-                             % that the *last* time window must also have data
-                             
-signals = load_signals(dataDir,dataType,trialInfo,windowInfo);
-windowed = getWindows(signals,windowInfo.stepSize,windowInfo.windowSize);
-
-%%
+trialInfo.epoch = 'target acquire'; % Target On | Target Acquire | Fixation | Mag Cue | Reward
 
 switch trialInfo.epoch
     case 'fixation'
-        windowInfo.windowSize = 250; %ms
-        windowInfo.lengthToPlot = 0; %ms
-        windowInfo.initial = -250; %ms -- use to look backwards
+        windowInfo.stepSize = 50; % ms - amount to step-forwards in sliding window
+        windowInfo.windowSize = 250; % ms - "bin size"
+        windowInfo.initial = -250; % ms - use to adjust the epoch start-time
+        windowInfo.lengthToPlot = 0; % use 0 for fixation baseline -- this is because
+                             % the TOTAL amount to plot = lengthToPlot +
+                             % windowSize, in order to account for the fact
+                             % that the *last* time window must also have data
         fixSignals = load_signals(dataDir,dataType,trialInfo,windowInfo);
         fixationSignals = getWindows(fixSignals,windowInfo.stepSize,windowInfo.windowSize);
-    case 'target Acquire'
-        windowInfo.windowSize = 250; %ms
-        windowInfo.lengthToPlot = 2000; %ms
-        windowInfo.initial = -1000; %ms -- use to look backwards
+    case 'target acquire'
+        windowInfo.stepSize = 50;
+        windowInfo.windowSize = 250; 
+        windowInfo.lengthToPlot = 2000;
+        windowInfo.initial = -1000;
         targSignals = load_signals(dataDir,dataType,trialInfo,windowInfo);
         targetAcSignals = getWindows(targSignals,windowInfo.stepSize,windowInfo.windowSize);
 end
-toc;
+
+toc
+
+
+
+
+
+
+
 
  
 %% get non-normalized power
@@ -63,7 +65,7 @@ zScore = zScoreCoherence(coherence);
 %% plot coherence
 
 % h = coherenceOverTime(coherence,freq,120,[],0);
-h = coherenceOverTime(targetAcPower,frequency,120,[.9 1.1],1);
+h = coherenceOverTime2(targetAcPower,frequency,120,'clims',[],'yLabel','Normalized Power');
 % h = coherenceOverTime(normCoherence,freq,120,[],0);
 
 % h = coherenceOverTime(accCV,frequency,120,[0 3],0);
