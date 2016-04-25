@@ -8,13 +8,12 @@ for i = 1:length(subfolders);
     
     sqlDir = dir('*.sqlite');
     
-    foundSqlFile = 0;
-    
     if isempty(sqlDir)
         behavFolder = only_folders(rid_super_sub_folder_references(dir(cd)));
         if isempty(behavFolder)
             error('No behavioral data were found in the subfolder %s',folderPath);
         else
+            foundSqlFile = 0; k = 1;
             while ~foundSqlFile && k <= length(behavFolder)
                 cd(fullfile(folderPath,behavFolder(k).name));
                 sqlDirSubFolder = dir('*.sqlite');
@@ -28,6 +27,7 @@ for i = 1:length(subfolders);
             if foundSqlFile
                 for j = 1:length(sqlDirSubFolder);
                     sqlFile = sqlDirSubFolder(j).name;
+                    fprintf('\nMoving file %s to %s',sqlFile,folderPath);
                     destination = fullfile(folderPath,sqlFile);
                     copyfile(sqlFile,destination);
                 end
@@ -37,7 +37,7 @@ for i = 1:length(subfolders);
             end
         end
     else
-        fprinf('\nA .sqlite file was found in the correct place in subfolder %s', ...
+        fprintf('\nA .sqlite file was found in the correct place in subfolder %s', ...
             folderPath)
     end
         

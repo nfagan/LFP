@@ -75,8 +75,8 @@ for e in range(len(subfolders)):
 			conn.close() # close the .sqlite connection
 			print('\n\t\tDone')
 
-		else:
+	else:
 			
-			print('No .sqlite files were found in the folder %s, and it will be skipped') % fullFolderPath
+		print('No .sqlite files were found in the folder %s, and it will be skipped') % fullFolderPath
 
 	print('Done')
