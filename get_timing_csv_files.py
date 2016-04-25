@@ -67,6 +67,7 @@ for e in range(len(subfolders)):
 				os.chdir(saveDirectory) # cd -> specified save directory
 			else:
 				saveDirectory = fullFolderPath
+				os.chdir(saveDirectory) # cd -> specified save directory
 
 			print('\n\t\tSaving .csv file to "%s" ...') % saveDirectory
 			writer = csv.writer(open(csvFileName, "w")) # create a new .csv file
@@ -76,7 +77,7 @@ for e in range(len(subfolders)):
 			print('\n\t\tDone')
 
 	else:
-			
+
 		print('No .sqlite files were found in the folder %s, and it will be skipped') % fullFolderPath
 
 	print('Done')
