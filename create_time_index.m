@@ -87,29 +87,17 @@ for i = 1:length(fixedDir) % for each session folder ...
         plexSize = size(storePlexTimes,1);
         csvSize = size(csvFile,1);
         
-        if plexSize ~= csvSize % if the lengths match as-is, then this method of 
-                               % referencing a text-file index of each
-                               % .pl2's align code is unnecessary
-             if csvSize < plexSize
-                 error('There''s more neural data than behavioral data, and this method won''t work as is.');
-             else
-                 diffInLength = csvSize - plexSize;
-                 storePlexTimes(plexSize+1:csvSize,:) = 0;
-                 storePlexTimes = flipud(storePlexTimes);
-                 for k = 1:length(pl2Dir);
-                     fileName = sprintf('%d_time_index.txt',k);
-                     fileName = fullfile(umbrDir,fixedDir(i).name,fileName);
-                     onePl2Index = storePlexTimes(:,2) == k;
-                     dlmwrite(fileName,onePl2Index);
-                 end
-                 
-             end
+        if csvSize < plexSize
+            error('There''s more neural data than behavioral data, and this method won''t work as is.');
         else
-            fprintf(['\nThe lengths of the .pl2 and csvFiles match, and a time-index' ...
-                , ' shouldn''t be necessary for the files in the folder %s'],...
-                fixedDir(i).name);
-        end
-                         
+            storePlexTimes(plexSize+1:csvSize,:) = 0;
+            storePlexTimes = flipud(storePlexTimes);
+            for k = 1:length(pl2Dir);
+                fileName = sprintf('%d_time_index.txt',k);
+                fileName = fullfile(umbrDir,fixedDir(i).name,fileName);
+                onePl2Index = storePlexTimes(:,2) == k;
+                dlmwrite(fileName,onePl2Index);
+            end
+        end          
     end
-    
 end
