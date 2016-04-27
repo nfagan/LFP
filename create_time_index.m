@@ -7,7 +7,11 @@
 % .pl2 file, and that each .pl2 file is tagged with a number corresponding to
 % its order in the session (e.g. '1_kuro_saline.pl2','2_kuro_saline.pl2'); 
 
-function create_time_index(umbrDir)
+function create_time_index(umbrDir,lookWithOnePl2)
+
+if nargin < 2;
+    lookWithOnePl2 = 0;
+end
 
 cd(umbrDir);
                                                     % only get non-rem
@@ -24,7 +28,7 @@ for i = 1:length(fixedDir) % for each session folder ...
     
     if isempty(csvDir);
         error('No .csv file present for this subfolder (%s)',fixedDir(i).name);
-    elseif length(pl2Dir) == 1;
+    elseif length(pl2Dir) == 1 && lookWithOnePl2;
         warning(['There''s only 1 .pl2 file in this subfolder (%s),\nwhich we' ...
             , ' will assume to encompass the full Picto recording session.' ...
             , '\nThis folder will be skipped from further analysis'],fixedDir(i).name)
