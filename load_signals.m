@@ -108,7 +108,7 @@ if loadIn; % If storePlex is empty ...
     fprintf('\n \t \t Done');
 else % Otherwise, just load the trial data, and use neural data from storePlex
     fprintf('\n \n \t Using Neural Data from Workspace Variable storePlex...');
-    [~,eventData,trialVarData,M] = getDataFiles2(startDirectory,dataType,0);
+    [~,eventData,trialVarData,M] = getDataFiles3(startDirectory,dataType,0);
     plex = storePlex{k};
 end
 

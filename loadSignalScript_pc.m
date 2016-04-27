@@ -6,16 +6,24 @@ global forceReload;
 
 % dataDir = '/Volumes/My Passport/NICK/Chang Lab 2016/LFP/Olgas_Data_Targac/';
 % dataDir = '/Volumes/My Passport/NICK/Chang Lab 2016/LFP/new_data';
-% dataDir = 'E:\nick_data\reformatted';
-dataDir = 'E:\nick_data\to_fix';
+dataDir = 'E:\nick_data\reformatted';
+% dataDir = 'E:\nick_data\to_fix';
 
 dataType = 'bla:lfp'; % acc:lfp % reference
 
-trialInfo.outcome = 'both'; % 'self' | 'both' | 'other' | 'none' | 'pro' | 'anti' | 'all'
-trialInfo.trialType = 'choice'; % all | 'choice' | 'cued'
-trialInfo.epoch = 'fixation'; % Target On | Target Acquire | Fixation | Mag Cue | Reward
+trialInfo.outcome = 'self'; % 'self' | 'both' | 'other' | 'none' | 'pro' | 'anti' | 'all'
+trialInfo.trialType = 'cued'; % all | 'choice' | 'cued'
+trialInfo.epoch = 'target on'; % Target On | Target Acquire | Fixation | Mag Cue | Reward
 
 switch trialInfo.epoch
+    case 'target on'
+        windowInfo.stepSize = 50;
+        windowInfo.windowSize = 250; 
+        windowInfo.lengthToPlot = 2000;
+        windowInfo.initial = -1000;
+        targOnSignals = load_signals(dataDir,dataType,trialInfo,windowInfo);
+        targetOnSignals = getWindows(targOnSignals,windowInfo.stepSize,windowInfo.windowSize);
+        
     case 'fixation'
         windowInfo.stepSize = 50; % ms - amount to step-forwards in sliding window
         windowInfo.windowSize = 250; % ms - "bin size"
@@ -61,7 +69,7 @@ zScore = zScoreCoherence(coherence);
 %% plot coherence
 
 % h = coherenceOverTime(coherence,freq,120,[],0);
-h = coherenceOverTime2(targetAcPower,frequency(:,1),120,'clims',[],'yLabel','Normalized Power');
+h = coherenceOverTime2(targetAcPower,frequency(:,1),200,'clims',[],'yLabel','Normalized Power');
 % h = coherenceOverTime(normCoherence,freq,120,[],0);
 
 % h = coherenceOverTime(accCV,frequency,120,[0 3],0);
@@ -69,7 +77,7 @@ h = coherenceOverTime2(targetAcPower,frequency(:,1),120,'clims',[],'yLabel','Nor
 
 %% normalized power
 
-[targetAcPower,frequency] = normPower(targetAcSignals,fixationSignals,'periodogram');
+[targetAcPower,frequency] = normPower(targetOnSignals,fixationSignals,'periodogram');
 % [power,frequency] = getZScore(targetSignals,fixationSignals,'periodogram',1);
 % [zScore,frequency] = getZScore2(rewardSignals,'multitaper',0);
 % [rewardPower,frequency] = normalizedPower(rewardSignals,fixationSignals,'periodogram',1);
