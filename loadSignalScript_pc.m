@@ -46,6 +46,10 @@ end
 
 toc;
 
+%% cheek subtraction
+
+signal_subtraction(targetAcSignals,referenceSignals);
+
  
 %% get non-normalized power
 [power,frequency] = doPowerSpectrum(targetAcSignals,'p',1,[0:2:200]);

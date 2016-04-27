@@ -12,6 +12,8 @@ end
     
 
 switch channel
+    case 'reference'
+        channelName = 'WB11';
     case 'bla:spike'
         channelName = ''; % fill in later
     case 'acc:spike'
@@ -28,10 +30,6 @@ switch channel
         channelName = 'WB09';
     case 'wes bla'% kept in for compatability reasons
         channelName = 'WB01';
-    case 'testcheek'
-%         channelName = 'WB01';
-%         channelName = 'SPK09';
-        channelName = 'WB11';
 end
 
 % get Plexon file directory
