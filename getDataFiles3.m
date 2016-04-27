@@ -1,5 +1,16 @@
 function [plex,eventData,trialVarData,M] = getDataFiles3(directory,channel,doPlex,LFP)
 
+if ~isempty(strfind(directory,'03302016_Saline')) % SPECIAL CASE WHERE CHANNELS WERE FLIPPED
+    fprintf('\n');
+    warning('The channel ids for this folder (%s) will be flipped!',directory);
+    if strcmp(channel,'bla:lfp');
+        channel = 'acc:lfp';
+    elseif strcmp(channel,'acc:lfp');
+        channel = 'bla:lfp';
+    end
+end
+    
+
 switch channel
     case 'bla:spike'
         channelName = ''; % fill in later

@@ -93,7 +93,8 @@ for k = 1:length(folderDirectory); % For looping through DATA FILES
 
     infoStr = sprintf('\n\n Area/data: %s\n Trial type(s): %s\n Outcome(s): %s\n Epoch: %s', ...
 dataType,trialType,outcome,lower(epoch));
-    str = sprintf('\n \n Processing File %d of %d',k,length(folderDirectory));
+    str = sprintf('\n \n Processing File %d of %d (In %s)',k,length(folderDirectory),...
+        folderDirectory(k).name);
     fprintf(infoStr);
     fprintf(str);
     
