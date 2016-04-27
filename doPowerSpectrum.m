@@ -1,6 +1,8 @@
 function [power,frequency] = doPowerSpectrum(signals,functionType,takeMean,freqs)
 
-fs = 40000;
+global samplingRate;
+
+fs = samplingRate;
 
 numMultitapers = 5;    
 nw = (numMultitapers + 1)/2;
