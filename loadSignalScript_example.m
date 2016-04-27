@@ -1,16 +1,17 @@
 tic;
-
+global samplingRate;
 global storePlex; % global variable for pre-processed signals
 global storeDataType;
 global forceReload;
 
+samplingRate = 5e3;
 % dataDir = '/Volumes/My Passport/NICK/Chang Lab 2016/LFP/Olgas_Data_Targac/';
 dataDir = '/Volumes/My Passport/NICK/Chang Lab 2016/LFP/new_data';
 dataType = 'bla:lfp'; % acc:lfp
 
 trialInfo.outcome = 'self'; % 'self' | 'both' | 'other' | 'none' | 'pro' | 'anti' | 'all'
 trialInfo.trialType = 'choice'; % all | 'choice' | 'cued'
-trialInfo.epoch = 'target acquire'; % Target On | Target Acquire | Fixation | Mag Cue | Reward
+trialInfo.epoch = 'fixation'; % Target On | Target Acquire | Fixation | Mag Cue | Reward
 
 switch trialInfo.epoch
     case 'fixation'
@@ -33,14 +34,6 @@ switch trialInfo.epoch
 end
 
 toc
-
-
-
-
-
-
-
-
  
 %% get non-normalized power
 [power,frequency] = doPowerSpectrum(targetAcSignals,'p',1,[0:2:200]);

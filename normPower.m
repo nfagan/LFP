@@ -1,6 +1,8 @@
 function [power,frequency] = normPower(targSignals,fixSignals,functionType)
 
-fs = 40000; % Sampling rate
+global samplingRate;
+
+fs = samplingRate; % Sampling rate
 freqs = 0:2:200; % Frequencies to look over
 
 numMultitapers = 5; % Only relevant for multitapering

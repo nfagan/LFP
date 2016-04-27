@@ -1,5 +1,6 @@
 tic;
 
+global samplingRate;
 global storePlex; % global variable for pre-processed signals
 global storeDataType;
 global forceReload;

@@ -1,10 +1,12 @@
 function outputSignals = getWindows(inputSignals,stepSize,windowSize)
 
+global samplingRate;
+
 if iscell(inputSignals)
     inputSignals = inputSignals{1};
 end
 
-multiplier = 40e3/1e3; %because signals are sampled at 40,000 hz
+multiplier = samplingRate/1e3; %because signals are sampled at 40,000 hz
 stepSize = stepSize*multiplier;
 windowSize = windowSize*multiplier;
 toTruncate = windowSize/stepSize;

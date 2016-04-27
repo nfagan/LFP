@@ -35,9 +35,9 @@ switch channel
 end
 
 % get Plexon file directory
-plexFile = getFileType(directory,'pl2');
 
 if doPlex
+    plexFile = getFileType(directory,'pl2');
     plex = getPlexonData(plexFile,channelName);
 else
     if nargin>3;    
