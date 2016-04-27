@@ -114,6 +114,11 @@ for i = 1:length(subFolderDir);
             destinationPath = fullfile(umbrDir,['rem_' subFolderDir(i).name]);
             sourcePath = subFolderPath;
             movefile(sourcePath,destinationPath);
+            
+            if exist(sourcePath,'dir') == 7;
+                rmdir(sourcePath,'s');
+            end
+            
         else
             if strcmp(inp,'abort');
                 error('User aborted');
