@@ -111,6 +111,9 @@ for i = 1:length(subFolderDir);
             rmdir(subFolderPath,'s');
         elseif strcmp(inp(1),'n')
             fprintf('\nNot deleting %s ...',subFolderPath);
+            destinationPath = fullfile(umbrDir,['rem_' subFolderDir(i).name]);
+            sourcePath = subFolderPath;
+            movefile(sourcePath,destinationPath);
         else
             if strcmp(inp,'abort');
                 error('User aborted');
